@@ -14,7 +14,7 @@ SDK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SDK_DIR="$(dirname "$SDK_DIR")"
 SDK_DIR="$(dirname "$SDK_DIR")"
 BUILD_DIR=sdk/Adjust
-JAR_IN_DIR=adjust/build/outputs
+JAR_IN_DIR=testlibrary/build/outputs
 JAR_OUT_DIR=ext/Android/
 
 RED='\033[0;31m' # Red color
@@ -26,7 +26,7 @@ cd $(dirname $0)
 
 cd $BUILD_DIR
 echo -e "${GREEN}>>> Running Gradle tasks: clean makeJar ${NC}"
-./gradlew clean :adjust:makeJar
+./gradlew clean :testlibrary:makeJar
 
 echo -e "${GREEN}>>> Moving the ci testing jar from ${JAR_IN_DIR} to ${JAR_OUT_DIR} ${NC}"
-mv -v ${JAR_IN_DIR}/*.jar ${SDK_DIR}/${JAR_OUT_DIR}/adjust-android.jar
+mv -v ${JAR_IN_DIR}/*.jar ${SDK_DIR}/${JAR_OUT_DIR}/adjust-testing.jar
