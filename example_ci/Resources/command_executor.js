@@ -72,9 +72,9 @@ AdjustCommandExecutor.prototype.factory = function(params) {
 };
 
 AdjustCommandExecutor.prototype.teardown = function(params) {
-    if ('devareState' in params) {
-        var devareState = getFirstParameterValue(params, 'devareState') == 'true';
-        Adjust.teardown(devareState);
+    if ('deleteState' in params) {
+        var deleteState = getFirstParameterValue(params, 'deleteState') == 'true';
+        Adjust.teardown(deleteState);
     }
 };
 
