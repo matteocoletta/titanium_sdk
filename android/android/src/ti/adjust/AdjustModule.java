@@ -37,7 +37,6 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 	private static final String KEY_CURRENCY                   = "currency";
 	private static final String KEY_APP_TOKEN                  = "appToken";
 	private static final String KEY_LOG_LEVEL                  = "logLevel";
-	private static final String KEY_SDK_PREFIX                 = "sdkPrefix";
 	private static final String KEY_USER_AGENT                 = "userAgent";
 	private static final String KEY_EVENT_TOKEN                = "eventToken";
 	private static final String KEY_DELAY_START                = "delayStart";
@@ -80,7 +79,6 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 		String environment            = null;
 
 		String logLevel               = null;
-		String sdkPrefix              = null;
 		String userAgent              = null;
 		String processName            = null;
 		String defaultTracker         = null;
@@ -113,12 +111,6 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 			}
 		}
 		
-		if (hmArgs.containsKey(KEY_SDK_PREFIX)) {
-			if (null != hmArgs.get(KEY_SDK_PREFIX)) {
-				sdkPrefix = hmArgs.get(KEY_SDK_PREFIX).toString();
-			}
-		}
-
 		if (hmArgs.containsKey(KEY_USER_AGENT)) {
 			if (null != hmArgs.get(KEY_USER_AGENT)) {
 				userAgent = hmArgs.get(KEY_USER_AGENT).toString();
@@ -262,11 +254,6 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 			// Background tracking
 			if (sendInBackground) {
 				adjustConfig.setSendInBackground(sendInBackground);
-			}
-
-			// SDK prefix
-			if (isFieldValid(sdkPrefix)) {
-				adjustConfig.setSdkPrefix(sdkPrefix);
 			}
 
 			// Main process name

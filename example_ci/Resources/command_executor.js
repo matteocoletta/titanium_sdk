@@ -136,11 +136,6 @@ AdjustCommandExecutor.prototype.config = function(params) {
         adjustConfig.setUserAgent(userAgent);
     }
 
-    if ('sdkPrefix' in params) {
-        var sdkPrefix = getFirstParameterValue(params, 'sdkPrefix');
-        adjustConfig.setSdkPrefix(sdkPrefix);
-    }
-
     if ('attributionCallbackSendAll' in params) {
         adjustConfig.setAttributionCallbackListener(function(attribution) {
             AdjustTesting.addInfoToSend("trackerToken", attribution.trackerToken);

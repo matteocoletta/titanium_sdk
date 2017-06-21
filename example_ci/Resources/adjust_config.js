@@ -73,10 +73,6 @@ AdjustConfig.prototype.setBasePath = function(basePath) {
     this.basePath = basePath;
 };
 
-AdjustConfig.prototype.setSdkPrefix = function(sdkPrefix) {
-    this.sdkPrefix = sdkPrefix;
-};
-
 AdjustConfig.prototype.setAttributionCallbackListener = function(callback) {
     this.attributionCallback = callback;
 };
