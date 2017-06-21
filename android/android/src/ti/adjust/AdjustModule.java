@@ -33,36 +33,36 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 	// Standard Debugging variables
 	private static final String LCAT = "AdjustModule";
 
-	private static final String KEY_REVENUE = "revenue";
-	private static final String KEY_CURRENCY = "currency";
-	private static final String KEY_APP_TOKEN = "appToken";
-	private static final String KEY_LOG_LEVEL = "logLevel";
-	private static final String KEY_SDK_PREFIX = "sdkPrefix";
-	private static final String KEY_USER_AGENT = "userAgent";
-	private static final String KEY_EVENT_TOKEN = "eventToken";
-	private static final String KEY_DELAY_START = "delayStart";
-	private static final String KEY_ENVIRONMENT = "environment";
-	private static final String KEY_PROCESS_NAME = "processName";
-	private static final String KEY_TRANSACTION_ID = "transactionId";
-	private static final String KEY_DEFAULT_TRACKER = "defaultTracker";
-	private static final String KEY_SEND_IN_BACKGROUND = "sendInBackground";
-	private static final String KEY_PARTNER_PARAMETERS = "partnerParameters";
-	private static final String KEY_CALLBACK_PARAMETERS = "callbackParameters";
-	private static final String KEY_SHOULD_LAUNCH_DEEPLINK = "shouldLaunchDeeplink";
-	private static final String KEY_EVENT_BUFFERING_ENABLED = "eventBufferingEnabled";
-	
-	private static final String KEY_ATTRIBUTION_CALLBACK = "attributionCallback";
-	private static final String KEY_SESSION_SUCCESS_CALLBACK = "sessionSuccessCallback";
-	private static final String KEY_SESSION_FAILURE_CALLBACK = "sessionFailureCallback";
-	private static final String KEY_EVENT_SUCCESS_CALLBACK = "eventSuccessCallback";
-	private static final String KEY_EVENT_FAILURE_CALLBACK = "eventFailureCallback";
+	private static final String KEY_REVENUE                    = "revenue";
+	private static final String KEY_CURRENCY                   = "currency";
+	private static final String KEY_APP_TOKEN                  = "appToken";
+	private static final String KEY_LOG_LEVEL                  = "logLevel";
+	private static final String KEY_SDK_PREFIX                 = "sdkPrefix";
+	private static final String KEY_USER_AGENT                 = "userAgent";
+	private static final String KEY_EVENT_TOKEN                = "eventToken";
+	private static final String KEY_DELAY_START                = "delayStart";
+	private static final String KEY_ENVIRONMENT                = "environment";
+	private static final String KEY_PROCESS_NAME               = "processName";
+	private static final String KEY_TRANSACTION_ID             = "transactionId";
+	private static final String KEY_DEFAULT_TRACKER            = "defaultTracker";
+	private static final String KEY_SEND_IN_BACKGROUND         = "sendInBackground";
+	private static final String KEY_PARTNER_PARAMETERS         = "partnerParameters";
+	private static final String KEY_CALLBACK_PARAMETERS        = "callbackParameters";
+	private static final String KEY_SHOULD_LAUNCH_DEEPLINK     = "shouldLaunchDeeplink";
+	private static final String KEY_EVENT_BUFFERING_ENABLED    = "eventBufferingEnabled";
+	private static final String KEY_BASE_PATH                  = "basePath";
+	private static final String KEY_ATTRIBUTION_CALLBACK       = "attributionCallback";
+	private static final String KEY_SESSION_SUCCESS_CALLBACK   = "sessionSuccessCallback";
+	private static final String KEY_SESSION_FAILURE_CALLBACK   = "sessionFailureCallback";
+	private static final String KEY_EVENT_SUCCESS_CALLBACK     = "eventSuccessCallback";
+	private static final String KEY_EVENT_FAILURE_CALLBACK     = "eventFailureCallback";
 	private static final String KEY_DEFERRED_DEEPLINK_CALLBACK = "deferredDeeplinkCallback";
 
-	private V8Function jsAttributionCallback = null;
-	private V8Function jsSessionSuccessCallback = null;
-	private V8Function jsSessionFailureCallback = null;
-	private V8Function jsEventSuccessCallback = null;
-	private V8Function jsEventFailureCallback = null;
+	private V8Function jsAttributionCallback      = null;
+	private V8Function jsSessionSuccessCallback   = null;
+	private V8Function jsSessionFailureCallback   = null;
+	private V8Function jsEventSuccessCallback     = null;
+	private V8Function jsEventFailureCallback     = null;
 	private V8Function jsDeferredDeeplinkCallback = null;
 
     private boolean shouldLaunchDeeplink = true;
@@ -74,41 +74,23 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 	@Kroll.onAppCreate
 	public static void onAppCreate(TiApplication app) {}
 
-	// Methods
-	@Kroll.method
-	public String example() {
-		Log.d(LCAT, "example called");
-		return "hello world";
-	}
-
-	// Properties
-	@Kroll.getProperty
-	public String getExampleProp() {
-		Log.d(LCAT, "get example property");
-		return "hello world";
-	}
-
-	@Kroll.setProperty
-	public void setExampleProp(String value) {
-		Log.d(LCAT, "set example property: " + value);
-	}
-	
 	@Kroll.method
 	public void start(Object args) {
-		String appToken = null;
-		String environment = null;
-        
-		String logLevel = null;
-		String sdkPrefix = null;
-		String userAgent = null;
-		String processName = null;
-		String defaultTracker = null;
+		String appToken               = null;
+		String environment            = null;
 
-		boolean sendInBackground = false;
-		boolean isLogLevelSuppress = false;
+		String logLevel               = null;
+		String sdkPrefix              = null;
+		String userAgent              = null;
+		String processName            = null;
+		String defaultTracker         = null;
+        String basePath               = null;
+
+		boolean sendInBackground      = false;
+		boolean isLogLevelSuppress    = false;
         boolean eventBufferingEnabled = false;
 
-        double delayStart = 0.0;
+        double delayStart             = 0.0;
 
 		@SuppressWarnings("unchecked")
 		HashMap<Object, Object> hmArgs = (HashMap<Object, Object>)args;
@@ -193,6 +175,12 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 				shouldLaunchDeeplink = Boolean.parseBoolean(value);
 			} else {
 				shouldLaunchDeeplink = false;
+			}
+		}
+
+		if (hmArgs.containsKey(KEY_BASE_PATH)) {
+			if (null != hmArgs.get(KEY_BASE_PATH)) {
+				basePath = hmArgs.get(KEY_BASE_PATH).toString();
 			}
 		}
 
@@ -299,6 +287,11 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 			// Delay start
 			if (delayStart > 0) {
 				adjustConfig.setDelayStart(delayStart);
+			}
+
+			// Main process name
+			if (isFieldValid(basePath)) {
+				adjustConfig.setBasePath(basePath);
 			}
 
 			// Attribution callback
@@ -473,6 +466,7 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 	
 	@Kroll.method
 	public void removeSessionCallbackParameter(String key) {
+        Log.d(LCAT, "removeSessionCallbackParameter() with key[" + key + "]");
 		Adjust.removeSessionCallbackParameter(key);
 	}
 	
@@ -567,4 +561,40 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 
 		return false;
 	}
+
+	@Kroll.method
+	public void setTestingMode(String baseUrl) {
+		AdjustFactory.setTestingMode(baseUrl);
+	}
+
+	@Kroll.method
+	public void setReferrer(String referrer) {
+		Adjust.setReferrer(referrer);
+	}
+
+    @Kroll.method
+    public void teardown(Boolean deleteState) {
+        AdjustFactory.teardown(getActivity(), deleteState);
+    }
+
+    @Kroll.method
+    public void setTimerInterval(double timerInterval) {
+        AdjustFactory.setTimerInterval((long)timerInterval);
+    }
+
+    @Kroll.method
+    public void setTimerStart(double timerStart) {
+        AdjustFactory.setTimerStart((long)timerStart);
+    }
+
+    @Kroll.method
+    public void setSessionInterval(double sessionInterval) {
+        AdjustFactory.setSessionInterval((long)sessionInterval);
+    }
+
+    @Kroll.method
+    public void setSubsessionInterval(double subsessionInterval) {
+        AdjustFactory.setSubsessionInterval((long)subsessionInterval);
+    }
+
 }
