@@ -25,7 +25,6 @@ local.properties
 # built application files
 *.apk
 *.ap_
-*.jar
 
 # lint folder
 lint
