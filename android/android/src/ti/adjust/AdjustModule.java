@@ -36,6 +36,7 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 	private static final String KEY_REVENUE                    = "revenue";
 	private static final String KEY_CURRENCY                   = "currency";
 	private static final String KEY_APP_TOKEN                  = "appToken";
+	private static final String KEY_SDK_PREFIX                  = "sdkPrefix";
 	private static final String KEY_LOG_LEVEL                  = "logLevel";
 	private static final String KEY_USER_AGENT                 = "userAgent";
 	private static final String KEY_EVENT_TOKEN                = "eventToken";
@@ -80,6 +81,7 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 
 		String logLevel               = null;
 		String userAgent              = null;
+		String sdkPrefix              = null;
 		String processName            = null;
 		String defaultTracker         = null;
         String basePath               = null;
@@ -114,6 +116,12 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 		if (hmArgs.containsKey(KEY_USER_AGENT)) {
 			if (null != hmArgs.get(KEY_USER_AGENT)) {
 				userAgent = hmArgs.get(KEY_USER_AGENT).toString();
+			}
+		}
+
+		if (hmArgs.containsKey(KEY_SDK_PREFIX)) {
+			if (null != hmArgs.get(KEY_SDK_PREFIX)) {
+				sdkPrefix = hmArgs.get(KEY_SDK_PREFIX).toString();
 			}
 		}
 
@@ -269,6 +277,11 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
 			// User agent
 			if (isFieldValid(userAgent)) {
 				adjustConfig.setUserAgent(userAgent);
+			}
+
+			// Sdk Prefix
+			if (isFieldValid(sdkPrefix)) {
+				adjustConfig.setSdkPrefix(sdkPrefix);
 			}
 			
 			// Delay start
@@ -562,6 +575,14 @@ public class AdjustModule extends KrollModule implements OnAttributionChangedLis
     @Kroll.method
     public void teardown(Boolean deleteState) {
         AdjustFactory.teardown(getActivity(), deleteState);
+
+        jsAttributionCallback      = null;
+        jsSessionSuccessCallback   = null;
+        jsSessionFailureCallback   = null;
+        jsEventSuccessCallback     = null;
+        jsEventFailureCallback     = null;
+        jsDeferredDeeplinkCallback = null;
+        shouldLaunchDeeplink       = false;
     }
 
     @Kroll.method

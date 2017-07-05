@@ -32,6 +32,7 @@ public class AdjusttestingModule extends KrollModule
 
 	private V8Function jsExecuteCommandCallback = null;
     private TestLibrary testLibrary;
+    private String selectedTests;
 
 	public AdjusttestingModule() {
 		super();
@@ -48,6 +49,12 @@ public class AdjusttestingModule extends KrollModule
 
         this.testLibrary = new TestLibrary(baseUrl, 
                 new CommandListener(getKrollObject(), callback) );
+
+        if(this.selectedTests != null 
+                && !this.selectedTests.isEmpty()) {
+            testLibrary.setTests(this.selectedTests);
+        }
+
         testLibrary.initTestSession("titanium4.11.0@android4.11.4");
     }
 
@@ -63,6 +70,11 @@ public class AdjusttestingModule extends KrollModule
         if (null != testLibrary) {
             testLibrary.sendInfoToServer();
         }
+    }
+
+    @Kroll.method
+    public void setTests(String selectedTests) {
+        this.selectedTests = selectedTests;
     }
 
     @Kroll.method
