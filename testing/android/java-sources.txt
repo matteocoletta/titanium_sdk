@@ -2,6 +2,7 @@
 "/Users/ab/Dev/titanium_sdk_2/testing/android/src/ti/adjusttesting/CommandListener.java"
 "/Users/ab/Dev/titanium_sdk_2/testing/android/src/ti/adjusttesting/ExampleProxy.java"
 "/Users/ab/Dev/titanium_sdk_2/testing/android/src/ti/adjusttesting/OnExitListener.java"
+"/Users/ab/Dev/titanium_sdk_2/testing/android/build/generated/java/ti/adjusttesting/AdjusttestingBootstrap.java"
 "/Users/ab/Dev/titanium_sdk_2/testing/android/build/generated/r/android/support/v7/appcompat/R.java"
 "/Users/ab/Dev/titanium_sdk_2/testing/android/build/generated/r/android/support/v7/cardview/R.java"
 "/Users/ab/Dev/titanium_sdk_2/testing/android/build/generated/r/ti/adjusttesting/R.java"
