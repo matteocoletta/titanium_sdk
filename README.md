@@ -776,7 +776,7 @@ In this case, the Adjust SDK not send the initial install session and any events
 
 You can take advantage of the following features once you have integrated the Adjust SDK into your project.
 
-### <a id="push-token"></a>Push token
+### <a id="push-token"></a>Push token (Uninstall/Reinstall tracking)
 
 To send us the push notification token, add the following call to Adjust **whenever you get your token in the app or when it gets updated**:
 
