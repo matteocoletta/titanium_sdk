@@ -69,11 +69,11 @@ This is the Titanium SDK of adjust™. You can read more about adjust™ at [adj
 
 ### Testing and Troubleshooting
 
-* [Troubleshooting](#troubleshooting)
-   * [I'm seeing the "The Google Play services resources were not found" error](#ts-gps-resources-not-found)
+   * [Troubleshooting](#troubleshooting)
+      * [I'm seeing the "The Google Play services resources were not found" error](#ts-gps-resources-not-found)
 
-* [GDPR right to be forgotten](#gdpr-forget-me)
-* [License](#license)
+   * [GDPR right to be forgotten](#gdpr-forget-me)
+   * [License](#license)
 
 ---
 
@@ -119,6 +119,8 @@ var AdjustConfig = require('adjust_config');
 ```
 
 **Note**: With each SDK update, please make sure that you **update these two files as well**.
+
+#### [Common issues](#ts-gps-resources-not-found)
 
 ### <a id="sdk-integrate"></a>Integrate the SDK into your app
 
