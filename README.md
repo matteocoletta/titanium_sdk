@@ -68,13 +68,13 @@ This is the Titanium SDK of adjust™. You can read more about adjust™ at [adj
    * [Disable tracking](#disable-tracking)
    * [GDPR right to be forgotten](#gdpr-forget-me)
    
-### [License](#license)
+
 
 ### Testing and Troubleshooting
 
-   * [Troubleshooting](#troubleshooting)
-      * [I'm seeing the "The Google Play services resources were not found" error](#ts-gps-resources-not-found)
+   * [I'm seeing the "The Google Play services resources were not found" error](#ts-gps-resources-not-found)
 
+### [License](#license)
 ---
 
 ## <a id="early-steps"></a>Quick Start
