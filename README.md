@@ -62,8 +62,8 @@ This is the Titanium SDK of adjust™. You can read more about adjust™ at [adj
      * [Adjust device identifier](#di-adid)   
    * [Track additional device identifiers](#track-additional-ids)
    * [Pre-installed trackers](#pre-installed-trackers)
-   * [Event buffering](#event-buffering)
    * [Background tracking](#background-tracking)   
+   * [Event buffering](#event-buffering)
    * [Offline mode](#offline-mode)   
    * [Disable tracking](#disable-tracking)
    * [GDPR right to be forgotten](#gdpr-forget-me)
@@ -1010,19 +1010,6 @@ If you want to use the Adjust SDK to recognize users whose devices came with you
     ```
     Default tracker: 'abc123'
     ```
-
-### <a id="event-buffering"></a>Event buffering
-
-If your app makes heavy use of event tracking, you might want to delay some HTTP requests in order to send them in one batch every minute. You can enable event buffering with your `AdjustConfig` instance by calling the `setEventBufferingEnabled` method:
-
-```js
-var adjustConfig = new AdjustConfig(appToken, environment);
-
-adjustConfig.setEventBufferingEnabled(true);
-
-Adjust.start(adjustConfig);
-```
-
 ### <a id="background-tracking"></a>Background tracking
 
 The default behavior of the Adjust SDK is to **pause sending HTTP requests while the app is in the background**. You can change this in your `AdjustConfig` instance by calling the `setSendInBackground` method:
@@ -1036,6 +1023,18 @@ Adjust.start(adjustConfig);
 ```
 
 If nothing is set here, sending in background is **disabled by default**.
+
+### <a id="event-buffering"></a>Event buffering
+
+If your app makes heavy use of event tracking, you might want to delay some HTTP requests in order to send them in one batch every minute. You can enable event buffering with your `AdjustConfig` instance by calling the `setEventBufferingEnabled` method:
+
+```js
+var adjustConfig = new AdjustConfig(appToken, environment);
+
+adjustConfig.setEventBufferingEnabled(true);
+
+Adjust.start(adjustConfig);
+```
 
 ### <a id="offline-mode"></a>Offline mode
 
